@@ -31,6 +31,6 @@ if [ -L "$link_name" ]; then
 fi
 ln -s "$link_target" "$link_name"
 sudo chown -R ubuntu:ubuntu /data/
-sudo sed -i '/^[^#]*server_name.*;$/a \ \n\t\tlocation \/hbnb_static/ {\n\t\t\t\talias /data/web_static/current/;\n\t\t}' file.txt
+sudo sed -i '/^[^#]*server_name.*;$/a \ \n\t\tlocation \/hbnb_static/ {\n\t\t\t\talias /data/web_static/current/;\n\t\t}' /etc/nginx/sites-available/default
 sudo service nginx start
 sudo nginx -s reload
