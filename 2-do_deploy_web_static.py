@@ -2,11 +2,10 @@
 from fabric.api import *
 from datetime import datetime
 import os
+"""Packing"""
+env.user = ['ubuntu']
+env.hosts = ['52.87.230.156', '100.26.151.67']
 
-# Configure Fabric environment
-env.user = 'ubuntu'
-env.hosts = ['100.26.151.67', '52.87.230.156']
-env.key_filename = os.path.expanduser('~/.ssh/id_rsa')
 
 def do_deploy(archive_path):
     """Make .tgz file"""
@@ -17,10 +16,15 @@ def do_deploy(archive_path):
         li = archive_path.split('/')
         file_name = li[-1]
         run(f'mkdir -p /data/web_static/releases/{file_name[:-4]}')
-        run(f'tar -xzf /tmp/{file_name} -C /data/web_static/releases/{file_name[:-4]}/')
+        run(
+            f'tar -xzf /tmp/{file_name} -C /data/web_static/releases/{file_name[:-4]}')
         run(f'rm /tmp/{file_name}')
+        run(
+            f'mv /data/web_static/releases/{file_name[:-4]}/web_static/* /data/web_static/releases/{file_name[:-4]}/')
+        run(f'rm -rf /data/web_static/releases/{file_name[:-4]}/web_static')
         run('rm -rf /data/web_static/current')
-        run(f'ln -s /data/web_static/releases/{file_name[:-4]}/ /data/web_static/current')
+        run(
+            f'ln -s /data/web_static/releases/{file_name[:-4]}/ /data/web_static/current')
         print('New version deployed!')
         return True
     except Exception as e:
