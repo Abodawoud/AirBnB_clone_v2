@@ -29,11 +29,11 @@ def do_deploy(archive_path):
 
         run(f'mv {release_folder}/web_static/* {release_folder}/')
 
-        run(f'rm -rf {release_folder}/web_static')
+        run(f'rm -rf {release_folder}/web_static/')
 
-        run('rm -rf /data/web_static/current')
+        run('rm -rf /data/web_static/current/')
 
-        run(f'ln -s {release_folder}/ /data/web_static/current')
+        run(f'ln -s {release_folder}/ /data/web_static/current/')
 
         print('New version deployed!')
         return True
